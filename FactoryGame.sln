@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35913.81
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FactoryGame", "FactoryGame\FactoryGame.csproj", "{81B5E3A1-F77E-45B2-8D7E-8BFB2FEBB818}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{81B5E3A1-F77E-45B2-8D7E-8BFB2FEBB818}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81B5E3A1-F77E-45B2-8D7E-8BFB2FEBB818}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81B5E3A1-F77E-45B2-8D7E-8BFB2FEBB818}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81B5E3A1-F77E-45B2-8D7E-8BFB2FEBB818}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C19FE094-4B63-42F8-B367-6C33006627A0}
+	EndGlobalSection
+EndGlobal
