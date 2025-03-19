@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Diagnostics;
 
 namespace FactoryGame
 {
@@ -10,7 +11,7 @@ namespace FactoryGame
         private SpriteBatch _spriteBatch;
 
         SceneManager _sceneManager;
-
+        InputManager _input;
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -22,6 +23,11 @@ namespace FactoryGame
         {
             // TODO: Add your initialization logic here
             _sceneManager = new();
+            _input = new();
+
+            _input.KeyPressEvent += HandleInput;
+
+            _sceneManager.AddScene(new TestScene());  
 
             base.Initialize();
         }
@@ -38,7 +44,11 @@ namespace FactoryGame
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            _input.Update();
+
             _sceneManager.GetCurrentScene().Update(gameTime);
+
+
 
             // TODO: Add your update logic here
 
@@ -58,6 +68,11 @@ namespace FactoryGame
             // TODO: Add your drawing code here
 
             base.Draw(gameTime);
+        }
+
+        void HandleInput(object sender, InputEventArgs e) 
+        {
+            Debug.WriteLine(e.Key.ToString());
         }
     }
 }
