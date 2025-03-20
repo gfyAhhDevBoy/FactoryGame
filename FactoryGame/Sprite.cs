@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace FactoryGame
 {
-    abstract class Sprite
+    class Sprite
     {
         private Texture2D _texture;
         public Vector2 Position;
@@ -12,7 +12,7 @@ namespace FactoryGame
         public Rectangle Rect { 
             get
             {
-                return new Rectangle((int)Position.X - _texture.Width / 2, (int)Position.Y - _texture.Height / 2, _texture.Width, _texture.Height);
+                return new Rectangle((int)Position.X - _texture.Width / 2, (int)Position.Y - _texture.Height / 2, _texture.Width * (int) _scale.X, _texture.Height*(int)_scale.Y);
             }
         }
 

@@ -10,8 +10,12 @@ namespace FactoryGame
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
+        public static readonly Vector2 Scale = new Vector2(10, 10);
+
         SceneManager _sceneManager;
         InputManager _input;
+
+        Player _player;
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -25,9 +29,7 @@ namespace FactoryGame
             _sceneManager = new();
             _input = new();
 
-            _input.KeyPressEvent += HandleInput;
 
-            _sceneManager.AddScene(new TestScene());  
 
             base.Initialize();
         }
@@ -35,6 +37,9 @@ namespace FactoryGame
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            _player = new(Content.Load<Texture2D>("player"), new Vector2(200, 200), Scale);
+            _sceneManager.LoadScene(new GameScene(_player), Content);
 
             // TODO: use this.Content to load your game content here
         }
@@ -68,11 +73,6 @@ namespace FactoryGame
             // TODO: Add your drawing code here
 
             base.Draw(gameTime);
-        }
-
-        void HandleInput(object sender, InputEventArgs e) 
-        {
-            Debug.WriteLine(e.Key.ToString());
         }
     }
 }

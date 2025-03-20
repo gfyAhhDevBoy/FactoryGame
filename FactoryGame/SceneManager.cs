@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework.Content;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,13 +16,13 @@ namespace FactoryGame
             _sceneStack = new();
         }
 
-        public void AddScene(IScene scene)
+        public void LoadScene(IScene scene, ContentManager content)
         {
-            scene.Load();
+            scene.Load(content);
             _sceneStack.Push(scene);
         }
 
-        public void RemoveScene()
+        public void UnloadScene()
         {
             _sceneStack.Peek().Unload();
             _sceneStack.Pop();
