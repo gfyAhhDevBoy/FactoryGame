@@ -14,7 +14,7 @@ namespace FactoryGame
     {
         Vector2 _movement;
 
-        private readonly float speed = 100f;
+        private readonly float speed = 220f;
 
         public Player(Texture2D texture, Vector2 position, Vector2 scale) : base(texture, position, scale)
         {
@@ -28,33 +28,45 @@ namespace FactoryGame
             {
                 _movement.Y -= 1;
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.A))
-            {
-                _movement.X -= 1;
-            }
             if (Keyboard.GetState().IsKeyDown(Keys.S))
             {
                 _movement.Y += 1;
+            }
+            if (_movement != Vector2.Zero)
+            {
+                _movement.Normalize();
+            }
+            Position.Y += _movement.Y * speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            foreach (var sprite in sprites)
+            {
+                if (sprite.Rect.Intersects(Rect))
+                {
+                    Position.Y -= _movement.Y * speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                }
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.A))
+            {
+                _movement.X -= 1;
             }
             if (Keyboard.GetState().IsKeyDown(Keys.D))
             {
                 _movement.X += 1;
             }
-
             if (_movement != Vector2.Zero)
             {
                 _movement.Normalize();
             }
 
-            Position += _movement * speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-            foreach(var sprite in sprites)
+            Position.X += _movement.X * speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            foreach (var sprite in sprites)
             {
-                if(sprite.Rect.Intersects(Rect))
+                if (sprite.Rect.Intersects(Rect))
                 {
-                    Position -= _movement * speed;
+                    Position.X -= _movement.X * speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 }
             }
+
         }
 
         public override void Update(GameTime gameTime)
@@ -62,14 +74,9 @@ namespace FactoryGame
             base.Update(gameTime);   
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch, Vector2 offset)
         {
-            base.Draw(spriteBatch);
+            base.Draw(spriteBatch, offset);
         }
-    }
-
-    class Camera
-    {
-
     }
 }

@@ -28,9 +28,15 @@ namespace FactoryGame
             
         }
 
-        public virtual void Draw(SpriteBatch spriteBatch)
+        public virtual void Draw(SpriteBatch spriteBatch, Vector2 offset)
         {
-            spriteBatch.Draw(_texture, Rect, Color.White);
+            Rectangle dest = new(
+                Rect.X + (int)offset.X,
+                Rect.Y + (int)offset.Y,
+                Rect.Width,
+                Rect.Height
+            );
+            spriteBatch.Draw(_texture, dest, Color.White);
         }
     }
 }
