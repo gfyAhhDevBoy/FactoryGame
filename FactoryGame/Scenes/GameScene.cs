@@ -16,6 +16,8 @@ namespace FactoryGame.Scenes
 
         List<Sprite> _sprites;
 
+        SceneManager _sceneManager;
+
         public GameScene(Player player, Camera camera)
         {
             _player = player;

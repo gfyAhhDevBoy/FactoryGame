@@ -20,8 +20,11 @@ namespace FactoryGame
         Player _player;
         Camera _camera;
 
-        public static readonly int ScreenWidth = 960;
-        public static readonly int ScreenHeight = 540;
+        public static readonly int ScreenWidth = 1920;
+        public static readonly int ScreenHeight = 1080;
+
+        MainMenuScene _menuScene;
+        GameScene _gameScene;
 
         public Game1()
         {
@@ -40,6 +43,7 @@ namespace FactoryGame
             _graphics.PreferredBackBufferWidth = ScreenWidth;
             _graphics.PreferredBackBufferHeight = ScreenHeight;
             _graphics.ApplyChanges();
+            
 
             base.Initialize();
         }
@@ -49,9 +53,19 @@ namespace FactoryGame
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             _player = new(Content.Load<Texture2D>("player"), new Vector2(200, 200), Scale);
-            _sceneManager.LoadScene(new MainMenuScene(), Content);
+
+            _menuScene = new();
+            _gameScene = new(_player, _camera);
+            _sceneManager.LoadScene(_menuScene, Content);
+            _menuScene.playButton.ClickEvent += PlayButton_ClickEvent;
 
             // TODO: use this.Content to load your game content here
+        }
+
+        private void PlayButton_ClickEvent(object sender, System.EventArgs e)
+        {
+            _sceneManager.UnloadScene();
+            _sceneManager.LoadScene(_gameScene, Content);
         }
 
         protected override void Update(GameTime gameTime)

@@ -6,11 +6,12 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace FactoryGame.UI
 {
-    class TextButtonElement : IUIElement
+    class TexturedTextButtonElement : IUIElement
     {
         public delegate void ClickEventHandler(object sender, EventArgs e);
         public event ClickEventHandler ClickEvent;
 
+        private Texture2D _texture;
         public Vector2 Position;
         private Rectangle _rect;
         public string Text;
@@ -19,20 +20,20 @@ namespace FactoryGame.UI
         private Color _color, _highlightColor;
         MouseState _prevMouseState;
 
-        public TextButtonElement(Vector2 position, string text, SpriteFont font, Color color, Color highlightColor)
+        public TexturedTextButtonElement(Vector2 position, string text, Texture2D texture, SpriteFont font, Color textColor, Color textHighlightColor)
         {
             Position = position;
-            Text = text;
-            _font = font;
-            _rect = new((int)position.X - (int) font.MeasureString(text).X / 2, (int)position.Y - (int)font.MeasureString(text).Y / 2, (int) font.MeasureString(text).X, (int) font.MeasureString(text).Y);
-            _color = color;
-            _highlightColor = highlightColor;
+            _texture = texture;
+            _rect = new((int)position.X - (int)font.MeasureString(text).X, (int)position.Y - (int)font.MeasureString(text).Y, texture.Width, texture.Height);
+            _color = textColor;
+            _highlightColor = textColor;
             _prevMouseState = Mouse.GetState();
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.DrawString(_font, Text, new(_rect.X, _rect.Y), _highlighted ? _highlightColor : _color);
+            spriteBatch.Draw(_texture, _rect, _highlighted ? Color.Gray : Color.White);
+            spriteBatch.DrawString(_font, Text, new(Position.X - _font.MeasureString(Text).X, Position.Y - _font.MeasureString(Text).X), _highlighted ? _highlightColor : _color);
         }
 
         public void Update()
