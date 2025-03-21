@@ -13,12 +13,13 @@ namespace FactoryGame
     class Player : Sprite
     {
         Vector2 _movement;
-
-        private readonly float speed = 220f;
+        private float _rotation;
+        private readonly float speed = 220f
 
         public Player(Texture2D texture, Vector2 position, Vector2 scale) : base(texture, position, scale)
         {
             _movement = Vector2.Zero;
+            _rotation = 0;
         }
 
         public void Update(GameTime gameTime, List<Sprite> sprites)
@@ -66,17 +67,24 @@ namespace FactoryGame
                     Position.X -= _movement.X * speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 }
             }
-
         }
 
         public override void Update(GameTime gameTime)
         {
-            base.Update(gameTime);   
+            base.Update(gameTime); 
         }
 
         public override void Draw(SpriteBatch spriteBatch, Vector2 offset)
         {
-            base.Draw(spriteBatch, offset);
+            Rectangle dest = new(
+                Rect.X + (int)offset.X,
+                Rect.Y + (int)offset.Y,
+                Rect.Width,
+                Rect.Height
+            );
+            spriteBatch.Draw(_texture, dest, null, Color.White, _rotation, new(0,0), SpriteEffects.None, 0f);
+            
+            //base.Draw(spriteBatch, offset);
         }
     }
 }

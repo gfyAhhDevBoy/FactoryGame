@@ -52,12 +52,12 @@ namespace FactoryGame
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            _player = new(Content.Load<Texture2D>("player"), new Vector2(200, 200), Scale);
+            _player = new(Content.Load<Texture2D>("player"), new Vector2(0,0), Scale);
 
             _menuScene = new();
             _gameScene = new(_player, _camera);
-            _sceneManager.LoadScene(_menuScene, Content);
-            _menuScene.playButton.ClickEvent += PlayButton_ClickEvent;
+            _sceneManager.LoadScene(new GameScene(_player, _camera), Content);
+            //_menuScene.playButton.ClickEvent += PlayButton_ClickEvent;
 
             // TODO: use this.Content to load your game content here
         }

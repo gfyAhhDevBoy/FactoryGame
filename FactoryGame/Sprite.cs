@@ -5,9 +5,9 @@ namespace FactoryGame
 {
     class Sprite
     {
-        private Texture2D _texture;
+        protected Texture2D _texture;
         public Vector2 Position;
-        private Vector2 _scale;
+        protected Vector2 _scale;
         
         public Rectangle Rect { 
             get
