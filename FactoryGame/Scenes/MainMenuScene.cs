@@ -13,29 +13,24 @@ namespace FactoryGame.Scenes
     class MainMenuScene : IScene
     {
         private List<IUIElement> uiElements;
+        UIManager ui;
         public TextButtonElement playButton;
 
         public void Load(ContentManager content)
         {
-            uiElements = new();
+            ui = new();
             playButton = new(new(Game1.ScreenWidth / 2, Game1.ScreenHeight / 2), "Play", content.Load<SpriteFont>("MenuText"), Color.White, Color.LightGray);
             
-            uiElements.Add(playButton);
+            ui.Add(playButton);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            foreach (var element in uiElements)
-            {
-                element.Draw(spriteBatch);
-            }
+            ui.Draw(spriteBatch);
         }
         public void Update(GameTime gameTime)
         {
-            foreach(var element in uiElements)
-            {
-                element.Update();
-            }
+            ui.Update();
         }
 
         public void Unload()
