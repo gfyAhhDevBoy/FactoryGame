@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using System.Diagnostics;
 
 namespace FactoryGame
@@ -16,10 +17,25 @@ namespace FactoryGame
             ZoomLevel = 5;
             input = new();
 
-            input.MouseScrollEvent += Input_MouseScrollEvent;
+            input.MouseScrollEvent += HandleMouseWheel;
+            input.KeyPressEvent += HandleKeyInput;
         }
 
-        private void Input_MouseScrollEvent(object sender, Util.ScrollWheelEventArgs e)
+        private void HandleKeyInput(object sender, Util.KeboardEventArgs e)
+        {
+            if (e.Key == Keys.OemPlus)
+            {
+                if (ZoomLevel > 0)
+                    ZoomLevel--;
+            }
+            else if (e.Key == Keys.OemPlus)
+            {
+                if (ZoomLevel > 5)
+                    ZoomLevel++;
+            }
+        }
+
+        private void HandleMouseWheel(object sender, Util.ScrollWheelEventArgs e)
         {
             if(e.Dir == Util.ScrollWheelDirection.Up)
             {
