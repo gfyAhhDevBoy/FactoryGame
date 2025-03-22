@@ -12,7 +12,6 @@ namespace FactoryGame.Scenes
 {
     class MainMenuScene : IScene
     {
-        private List<IUIElement> uiElements;
         UIManager ui;
         public TextButtonElement playButton;
 
@@ -20,7 +19,6 @@ namespace FactoryGame.Scenes
         {
             ui = new();
             playButton = new(new(Game1.ScreenWidth / 2, Game1.ScreenHeight / 2), "Play", content.Load<SpriteFont>("MenuText"), Color.White, Color.LightGray);
-            
             ui.Add(playButton);
         }
 

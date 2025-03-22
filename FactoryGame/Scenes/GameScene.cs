@@ -28,9 +28,9 @@ namespace FactoryGame.Scenes
         {
             foreach (var sprite in _sprites)
             {
-                sprite.Draw(spriteBatch, _camera);
+                sprite.Draw(spriteBatch, _camera.Position);
             }
-            _player.Draw(spriteBatch, _camera);
+            _player.Draw(spriteBatch, _camera.Position);
         }
 
         public void Load(ContentManager content)

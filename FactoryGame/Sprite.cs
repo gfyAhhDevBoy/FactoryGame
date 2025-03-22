@@ -28,11 +28,11 @@ namespace FactoryGame
             
         }
 
-        public virtual void Draw(SpriteBatch spriteBatch, in Camera camera)
+        public virtual void Draw(SpriteBatch spriteBatch, Vector2 offset)
         {
             Rectangle dest = new(
-                Rect.X + (int)camera.Position.X,
-                Rect.Y + (int)camera.Position.Y,
+                Rect.X + (int)offset.X,
+                Rect.Y + (int)offset.Y,
                 Rect.Width,
                 Rect.Height
             );

@@ -9,6 +9,8 @@ namespace FactoryGame
 {
     public class Game1 : Game
     {
+        public static Game1 Instance { get; private set; }
+
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
@@ -18,7 +20,7 @@ namespace FactoryGame
         InputManager _input;
 
         Player _player;
-        Camera _camera;
+        public Camera Camera;
 
         public static readonly int ScreenWidth = 1920;
         public static readonly int ScreenHeight = 1080;
@@ -31,6 +33,7 @@ namespace FactoryGame
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+            Instance = this;
         }
 
         protected override void Initialize()
@@ -38,7 +41,9 @@ namespace FactoryGame
             // TODO: Add your initialization logic here
             _sceneManager = new();
             _input = new();
-            _camera = new(Vector2.Zero);
+            Camera = new(Vector2.Zero);
+            _menuScene = new();
+            _gameScene = new(_player, Camera);
 
             _graphics.PreferredBackBufferWidth = ScreenWidth;
             _graphics.PreferredBackBufferHeight = ScreenHeight;
@@ -55,9 +60,10 @@ namespace FactoryGame
             _player = new(Content.Load<Texture2D>("player"), new Vector2(0,0), Scale);
 
             _menuScene = new();
-            _gameScene = new(_player, _camera);
-            _sceneManager.LoadScene(new GameScene(_player, _camera), Content);
-            //_menuScene.playButton.ClickEvent += PlayButton_ClickEvent;
+            _gameScene = new(_player, Camera);
+            //_sceneManager.LoadScene(new GameScene(_player, _camera), Content);
+            _sceneManager.LoadScene(_menuScene, Content);
+            _menuScene.playButton.ClickEvent += PlayButton_ClickEvent;
 
             // TODO: use this.Content to load your game content here
         }

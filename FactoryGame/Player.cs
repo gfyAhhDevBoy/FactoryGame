@@ -2,22 +2,29 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
+using FactoryGame.Items;
 
 namespace FactoryGame
 {
     class Player : Sprite
     {
         Vector2 _movement;
-        private float _rotation;
         private readonly float speed = 220f;
 
         public Vector2 Origin;
+        public Vector2 ItemOrigin;
+
+        private SpriteEffects _rotation;
+
+        public Item? CurrentItem;
 
         public Player(Texture2D texture, Vector2 position, Vector2 scale) : base(texture, position, scale)
         {
             _movement = Vector2.Zero;
-            _rotation = 0;
+            
             Origin = new(Rect.Width / 2, Rect.Height / 2);
+            ItemOrigin = new(Rect.Width - Game1.Instance.Camera.Position.X, Rect.Height / 2 - Game1.Instance.Camera.Position.Y);
+            CurrentItem = new TestItem();
         }
 
         public void Update(GameTime gameTime, List<Sprite> sprites)
@@ -47,10 +54,12 @@ namespace FactoryGame
             if (Keyboard.GetState().IsKeyDown(Keys.A))
             {
                 _movement.X -= 1;
+                _rotation = SpriteEffects.None;
             }
             if (Keyboard.GetState().IsKeyDown(Keys.D))
             {
                 _movement.X += 1;
+                _rotation = SpriteEffects.FlipHorizontally;
             }
             if (_movement != Vector2.Zero)
             {
@@ -72,17 +81,18 @@ namespace FactoryGame
             base.Update(gameTime); 
         }
 
-        public override void Draw(SpriteBatch spriteBatch, in Camera camera)
+        public override void Draw(SpriteBatch spriteBatch, Vector2 offset)
         {
-            /*Rectangle dest = new(
+            Rectangle dest = new(
                 Rect.X + (int)offset.X,
                 Rect.Y + (int)offset.Y,
                 Rect.Width,
                 Rect.Height
             );
-            spriteBatch.Draw(_texture, dest, null, Color.White, _rotation, Origin, SpriteEffects.None, 0f);
-*/
-            base.Draw(spriteBatch, camera);
+            CurrentItem.Draw(spriteBatch, this);
+            spriteBatch.Draw(_texture, dest, null, Color.White, 0f, new(), _rotation, 0f);
+
+            //base.Draw(spriteBatch, camera);
         }
     }
 }

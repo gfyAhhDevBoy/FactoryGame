@@ -4,7 +4,7 @@ using System.Diagnostics;
 
 namespace FactoryGame
 {
-    class Camera
+    public class Camera
     {
         public Vector2 Position;
         public int ZoomLevel;
