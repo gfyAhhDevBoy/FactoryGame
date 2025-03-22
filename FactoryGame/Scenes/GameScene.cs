@@ -28,9 +28,9 @@ namespace FactoryGame.Scenes
         {
             foreach (var sprite in _sprites)
             {
-                sprite.Draw(spriteBatch, _camera.Position);
+                sprite.Draw(spriteBatch, _camera);
             }
-            _player.Draw(spriteBatch, _camera.Position);
+            _player.Draw(spriteBatch, _camera);
         }
 
         public void Load(ContentManager content)
@@ -48,7 +48,8 @@ namespace FactoryGame.Scenes
         public void Update(GameTime gameTime)
         {
             _player.Update(gameTime, _sprites);
-            _camera.Follow(_player.Rect, new(Game1.ScreenWidth, Game1.ScreenHeight));
+            _camera.Update();
+            _camera.Follow(_player.Rect, _player.Origin, new(Game1.ScreenWidth, Game1.ScreenHeight));
         }
     }
 }

@@ -1,12 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FactoryGame
 {
@@ -14,12 +9,15 @@ namespace FactoryGame
     {
         Vector2 _movement;
         private float _rotation;
-        private readonly float speed = 220f
+        private readonly float speed = 220f;
+
+        public Vector2 Origin;
 
         public Player(Texture2D texture, Vector2 position, Vector2 scale) : base(texture, position, scale)
         {
             _movement = Vector2.Zero;
             _rotation = 0;
+            Origin = new(Rect.Width / 2, Rect.Height / 2);
         }
 
         public void Update(GameTime gameTime, List<Sprite> sprites)
@@ -74,17 +72,17 @@ namespace FactoryGame
             base.Update(gameTime); 
         }
 
-        public override void Draw(SpriteBatch spriteBatch, Vector2 offset)
+        public override void Draw(SpriteBatch spriteBatch, in Camera camera)
         {
-            Rectangle dest = new(
+            /*Rectangle dest = new(
                 Rect.X + (int)offset.X,
                 Rect.Y + (int)offset.Y,
                 Rect.Width,
                 Rect.Height
             );
-            spriteBatch.Draw(_texture, dest, null, Color.White, _rotation, new(0,0), SpriteEffects.None, 0f);
-            
-            //base.Draw(spriteBatch, offset);
+            spriteBatch.Draw(_texture, dest, null, Color.White, _rotation, Origin, SpriteEffects.None, 0f);
+*/
+            base.Draw(spriteBatch, camera);
         }
     }
 }
