@@ -91,7 +91,7 @@ namespace FactoryGame
             );
             
             spriteBatch.Draw(_texture, dest, null, Color.White, 0f, new(), _rotation, 0f);
-            CurrentItem.Draw(spriteBatch, offset, _rotation);
+            //_inventory.GetCurrentSlot().Draw(spriteBatch, offset);
             //base.Draw(spriteBatch, camera);
         }
     }

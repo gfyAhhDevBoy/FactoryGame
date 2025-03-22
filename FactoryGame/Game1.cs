@@ -43,7 +43,7 @@ namespace FactoryGame
             _input = new();
             Camera = new(Vector2.Zero);
             _menuScene = new();
-            _gameScene = new(_player, Camera);
+            _gameScene = new(_player, Camera, _graphics.GraphicsDevice);
 
             _graphics.PreferredBackBufferWidth = ScreenWidth;
             _graphics.PreferredBackBufferHeight = ScreenHeight;
@@ -60,7 +60,7 @@ namespace FactoryGame
             _player = new(Content.Load<Texture2D>("player"), new Vector2(0,0), Scale);
 
             _menuScene = new();
-            _gameScene = new(_player, Camera);
+            _gameScene = new(_player, Camera, _graphics.GraphicsDevice);
             //_sceneManager.LoadScene(new GameScene(_player, _camera), Content);
             _sceneManager.LoadScene(_menuScene, Content);
             _menuScene.playButton.ClickEvent += PlayButton_ClickEvent;

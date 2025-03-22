@@ -3,9 +3,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using FactoryGame.UI;
 
 namespace FactoryGame.Scenes
 {
@@ -17,11 +15,31 @@ namespace FactoryGame.Scenes
         List<Sprite> _sprites;
 
         SceneManager _sceneManager;
+        GraphicsDevice _graphicsDevice;
 
-        public GameScene(Player player, Camera camera)
+        UIManager _inventoryUI;
+
+        public GameScene(Player player, Camera camera, GraphicsDevice graphicsDevice)
         {
             _player = player;
             _camera = camera;
+            _graphicsDevice = graphicsDevice;
+            _inventoryUI = new();
+        }
+
+
+        public void Load(ContentManager content)
+        {
+            _sprites = new();
+            _sprites.Add(new Sprite(content.Load<Texture2D>("enemy"), new Vector2(500, 300), Game1.Scale));
+            _sprites.Add(new Sprite(content.Load<Texture2D>("enemy"), new Vector2(300, 300), Game1.Scale));
+            _sprites.Add(new Sprite(content.Load<Texture2D>("enemy"), new Vector2(100, 100), Game1.Scale));
+
+            _inventoryUI.Add(new UIRectangle(Game1.ScreenWidth / 2 - 412, Game1.ScreenHeight - 100, 825, 100, Color.DarkGray, _graphicsDevice));
+            for (int i = 0; i < 9; i++)
+            {
+                _inventoryUI.Add(new UIRectangle(Game1.ScreenWidth / 2 - 405 + 7 + ((15 + 75) * i), Game1.ScreenHeight - 85, 75, 75, Color.Black, _graphicsDevice));
+            }
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -31,15 +49,10 @@ namespace FactoryGame.Scenes
                 sprite.Draw(spriteBatch, _camera.Position);
             }
             _player.Draw(spriteBatch, _camera.Position);
+
+            _inventoryUI.Draw(spriteBatch);
         }
 
-        public void Load(ContentManager content)
-        {
-            _sprites = new();
-            _sprites.Add(new Sprite(content.Load<Texture2D>("enemy"), new Vector2(500, 300), Game1.Scale));
-            _sprites.Add(new Sprite(content.Load<Texture2D>("enemy"), new Vector2(300, 300), Game1.Scale));
-            _sprites.Add(new Sprite(content.Load<Texture2D>("enemy"), new Vector2(100, 100), Game1.Scale));
-        }
 
         public void Unload()
         {
@@ -50,6 +63,7 @@ namespace FactoryGame.Scenes
             _player.Update(gameTime, _sprites);
             _camera.Update();
             _camera.Follow(_player.Rect, _player.Origin, new(Game1.ScreenWidth, Game1.ScreenHeight));
+            _inventoryUI.Update();
         }
     }
 }
