@@ -15,9 +15,9 @@ namespace FactoryGame.Items
             _player = player;
         }
 
-        public virtual void Draw(SpriteBatch spriteBatch)
+        public virtual void Draw(SpriteBatch spriteBatch, Vector2 offset)
         {
-            Rectangle dest = new((int)(_player.ItemOrigin.X - _texture.Width / 2), (int)(_player.ItemOrigin.Y - _texture.Height / 2), Rect.Width, Rect.Height);
+            Rectangle dest = new((int)_player.Position.X + (int)offset.X, (int)_player.Position.Y + (int)offset.Y, Rect.Width, Rect.Height);
             spriteBatch.Draw(_texture, dest, Color.White);
         }
     }

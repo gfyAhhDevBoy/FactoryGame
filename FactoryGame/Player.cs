@@ -16,7 +16,7 @@ namespace FactoryGame
 
         private SpriteEffects _rotation;
 
-        public Item? CurrentItem;
+        private Inventory _inventory;
 
         public Player(Texture2D texture, Vector2 position, Vector2 scale) : base(texture, position, scale)
         {
@@ -24,7 +24,7 @@ namespace FactoryGame
             
             Origin = new(Rect.Width / 2, Rect.Height / 2);
             ItemOrigin = new(Rect.Width - Game1.Instance.Camera.Position.X, Rect.Height / 2 - Game1.Instance.Camera.Position.Y);
-            CurrentItem = new TestItem();
+            _inventory = new(9);
         }
 
         public void Update(GameTime gameTime, List<Sprite> sprites)
@@ -89,9 +89,9 @@ namespace FactoryGame
                 Rect.Width,
                 Rect.Height
             );
-            CurrentItem.Draw(spriteBatch, this);
+            
             spriteBatch.Draw(_texture, dest, null, Color.White, 0f, new(), _rotation, 0f);
-
+            CurrentItem.Draw(spriteBatch, offset, _rotation);
             //base.Draw(spriteBatch, camera);
         }
     }
