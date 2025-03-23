@@ -45,10 +45,9 @@ namespace FactoryGame
             _menuScene = new();
             _gameScene = new(_player, Camera, _graphics.GraphicsDevice);
 
-            _graphics.PreferredBackBufferWidth = ScreenWidth;
             _graphics.PreferredBackBufferHeight = ScreenHeight;
+            _graphics.PreferredBackBufferWidth = ScreenWidth;
             _graphics.ApplyChanges();
-            
 
             base.Initialize();
         }
@@ -61,7 +60,7 @@ namespace FactoryGame
 
             _menuScene = new();
             _gameScene = new(_player, Camera, _graphics.GraphicsDevice);
-            //_sceneManager.LoadScene(new GameScene(_player, _camera), Content);
+            //_sceneManager.LoadScene(new GameScene(_player, Camera, _graphics.GraphicsDevice), Content);
             _sceneManager.LoadScene(_menuScene, Content);
             _menuScene.playButton.ClickEvent += PlayButton_ClickEvent;
 

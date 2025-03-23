@@ -3,6 +3,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using FactoryGame.Items;
+using System.Diagnostics;
+using FactoryGame.Util;
 
 namespace FactoryGame
 {
@@ -16,7 +18,9 @@ namespace FactoryGame
 
         private SpriteEffects _rotation;
 
-        private Inventory _inventory;
+        public Inventory Inventory;
+
+        InputManager _input;
 
         public Player(Texture2D texture, Vector2 position, Vector2 scale) : base(texture, position, scale)
         {
@@ -24,11 +28,41 @@ namespace FactoryGame
             
             Origin = new(Rect.Width / 2, Rect.Height / 2);
             ItemOrigin = new(Rect.Width - Game1.Instance.Camera.Position.X, Rect.Height / 2 - Game1.Instance.Camera.Position.Y);
-            _inventory = new(9);
+            Inventory = new(9, this);
+
+            _input = new();
+            _input.KeyPressEvent += HandleKeyInput;
+            _input.MouseScrollEvent += HandleScrollWheelInput;
+        }
+
+        private void HandleScrollWheelInput(object sender, ScrollWheelEventArgs e)
+        {
+            if(e.Dir == ScrollWheelDirection.Up)
+            {
+                Inventory.NextSlot();
+            }
+            if(e.Dir == ScrollWheelDirection.Down)
+            {
+                Inventory.PreviousSlot();
+            }
+        }
+
+        private void HandleKeyInput(object sender, KeboardEventArgs e)
+        {
+            if (e.Key == Keys.Right)
+            {
+                Inventory.NextSlot();
+            }
+            if(e.Key == Keys.Left)
+            {
+                Inventory.PreviousSlot();
+            }
         }
 
         public void Update(GameTime gameTime, List<Sprite> sprites)
         {
+            _input.Update();
+
             _movement = Vector2.Zero;
             if (Keyboard.GetState().IsKeyDown(Keys.W))
             {
@@ -74,6 +108,8 @@ namespace FactoryGame
                     Position.X -= _movement.X * speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 }
             }
+            Debug.WriteLine(Inventory.GetCurrentSlot().ToString());
+
         }
 
         public override void Update(GameTime gameTime)

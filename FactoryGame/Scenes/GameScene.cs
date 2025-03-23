@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using FactoryGame.UI;
+using System.Diagnostics;
 
 namespace FactoryGame.Scenes
 {
@@ -36,10 +37,7 @@ namespace FactoryGame.Scenes
             _sprites.Add(new Sprite(content.Load<Texture2D>("enemy"), new Vector2(100, 100), Game1.Scale));
 
             _inventoryUI.Add(new UIRectangle(Game1.ScreenWidth / 2 - 412, Game1.ScreenHeight - 100, 825, 100, Color.DarkGray, _graphicsDevice));
-            for (int i = 0; i < 9; i++)
-            {
-                _inventoryUI.Add(new UIRectangle(Game1.ScreenWidth / 2 - 405 + 7 + ((15 + 75) * i), Game1.ScreenHeight - 85, 75, 75, Color.Black, _graphicsDevice));
-            }
+            
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -51,6 +49,19 @@ namespace FactoryGame.Scenes
             _player.Draw(spriteBatch, _camera.Position);
 
             _inventoryUI.Draw(spriteBatch);
+            for (int i = 0; i < 9; i++)
+            {
+                if (_player.Inventory.GetCurrentSlot().Index == i)
+                {
+                    UIRectangle rect = new UIRectangle(Game1.ScreenWidth / 2 - 405 + 7 + ((15 + 75) * i), Game1.ScreenHeight - 85, 75, 75, Color.Red, _graphicsDevice);
+                    spriteBatch.Draw(rect.Texture, rect.DestRect, Color.White);
+                }
+                else
+                {
+                    UIRectangle rect = new UIRectangle(Game1.ScreenWidth / 2 - 405 + 7 + ((15 + 75) * i), Game1.ScreenHeight - 85, 75, 75, Color.Black, _graphicsDevice);
+                    spriteBatch.Draw(rect.Texture, rect.DestRect, Color.White);
+                }
+            }
         }
 
 

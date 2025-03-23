@@ -5,23 +5,29 @@ namespace FactoryGame.Items
 {
     class Inventory
     {
-        public Item[] Items { get; private set; }
+        public Slot[] Slots { get; private set; }
 
         public int CurrentSlot;
         public bool Empty { get; private set; }
+        Player _player;
 
-        public Inventory(int slots)
+        public Inventory(int slots, Player player)
         {
-            Items = new Item[slots];
+            Slots = new Slot[slots];
+            _player = player;
+            for (int i = 0; i < Slots.Length; i++)
+            {
+                Slots[i] = new(new Air(_player), i);
+            }
             Empty = false;
             CurrentSlot = 0;
         }
 
-        public void GoToSlot(int index)
+        public void SetSlot(int index)
         {
-            if(index > Items.Length - 1)
+            if(index > Slots.Length - 1)
             {
-                CurrentSlot = Items.Length - 1;
+                CurrentSlot = Slots.Length - 1;
             } else if(index < 0)
             {
                 CurrentSlot = 0;
@@ -32,14 +38,14 @@ namespace FactoryGame.Items
 
         }
 
-        public Item GetCurrentSlot()
+        public Slot GetCurrentSlot()
         {
-            return Items[CurrentSlot];
+            return Slots[CurrentSlot];
         }
 
         public void NextSlot()
         {
-            if (CurrentSlot < Items.Length - 1)
+            if (CurrentSlot < Slots.Length - 1)
                 CurrentSlot++;
         }
 
@@ -55,7 +61,7 @@ namespace FactoryGame.Items
         {
             if(index != null)
             {
-                if(index > Items.Length - 1)
+                if(index > Slots.Length - 1)
                 {
                     return;
                 }
@@ -63,21 +69,42 @@ namespace FactoryGame.Items
                 {
                     return;
                 }
-                if (Items[(int)index] == null)
+                if (Slots[(int)index].GetItem() == null)
                 {
-                    Items[(int)index] = item;
+                    Slots[(int)index].SetItem(item);
                 }
             } else
             {
-                for (int i = 0; i < Items.Length; i++)
+                for (int i = 0; i < Slots.Length; i++)
                 {
-                    if (Items[i] == null)
+                    if (Slots[i].GetItem() == null)
                     {
-                        Items[i] = item;
+                        Slots[i].SetItem(item);
                         break;
                     }
                 }
             }
+        }
+    }
+    class Slot
+    {
+        private Inventory _inventory;
+        private Item _item;
+        public int Index;
+
+        public Slot(Item item, int index)
+        {
+            _item = item;
+            Index = index;
+        }
+
+        public Item GetItem() { return _item; }
+        public void SetItem(Item item) { _item = item; }
+        public void RemoveItem() { _item = null; }
+
+        public override string ToString()
+        {
+            return string.Format("Item Name: {0}, Slot No.: {1}", _item.Name, Index);
         }
     }
 }

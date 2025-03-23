@@ -52,8 +52,6 @@ namespace FactoryGame
         public void Update()
         {
             input.Update();
-
-            Debug.WriteLine(ZoomLevel);
         }
 
         public void Follow(Rectangle target, Vector2 origin, Vector2 screenSize)

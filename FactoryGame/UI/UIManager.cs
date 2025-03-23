@@ -10,14 +10,14 @@ namespace FactoryGame.UI
 {
     class UIManager
     {
-        List<IUIElement> _elements;
+        protected List<IUIElement> _elements;
 
         public UIManager()
         {
             _elements = new();
         }
 
-        public void Update()
+        public virtual void Update()
         {
             foreach(var element in _elements)
             {
@@ -25,7 +25,7 @@ namespace FactoryGame.UI
             }
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public virtual void Draw(SpriteBatch spriteBatch)
         {
             foreach (var element in _elements)
             {
@@ -33,7 +33,7 @@ namespace FactoryGame.UI
             }
         }
 
-        public void Add(IUIElement uiElement)
+        public virtual void Add(IUIElement uiElement)
         {
             _elements.Add(uiElement);
         }
