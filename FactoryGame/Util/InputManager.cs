@@ -8,7 +8,12 @@ namespace FactoryGame.Util
         Up,
         Down
     }
-        
+     
+    public enum MouseButtons
+    {
+        Left,
+        Right
+    }
 
     public class InputManager
     {
@@ -18,6 +23,7 @@ namespace FactoryGame.Util
         public event KeyEventHandler KeyPressEvent;
         public event KeyEventHandler KeyUpEvent;
         public event MouseScrollEventHandler MouseScrollEvent;
+        public event MouseEventHandler MouseButtonEvent;
 
         private KeyboardState _prevKb;
         private HashSet<Keys> _prevPressedKeys;
@@ -30,12 +36,30 @@ namespace FactoryGame.Util
             _prevKb = Keyboard.GetState();
             _prevPressedKeys = new(_prevKb.GetPressedKeys());
             _prevScrollWheelValue = Mouse.GetState().ScrollWheelValue;
+            _prevMouse = Mouse.GetState();  
         }
 
         public void Update()
         {
             RaiseKeyPress();
             RaiseScrollWheelEvent();
+            RaiseMouseButtonEvent();
+        }
+
+        private void RaiseMouseButtonEvent()
+        {
+            MouseState mouse = Mouse.GetState(); 
+
+            if(mouse.LeftButton == ButtonState.Pressed && !(_prevMouse.LeftButton == ButtonState.Pressed))
+            {
+                MouseButtonEvent?.Invoke(this, new MouseEventArgs(MouseButtons.Left));
+            }
+            if (mouse.RightButton == ButtonState.Pressed && !(_prevMouse.RightButton == ButtonState.Pressed))
+            {
+                MouseButtonEvent?.Invoke(this, new MouseEventArgs(MouseButtons.Right));
+            }
+
+            _prevMouse = mouse;
         }
 
         private void RaiseKeyPress()
@@ -83,8 +107,8 @@ namespace FactoryGame.Util
     }
     public class MouseEventArgs
     {
-        public MouseEventArgs(MouseState mouseState) { MouseState = mouseState; }
-        public MouseState MouseState { get; }
+        public MouseEventArgs(MouseButtons mouseButton) { MouseButton = mouseButton; }
+        public MouseButtons MouseButton { get; }
     }
     public class ScrollWheelEventArgs
     {

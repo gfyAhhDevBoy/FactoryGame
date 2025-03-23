@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using System.Diagnostics;
 
 namespace FactoryGame.Items
 {
@@ -23,9 +24,19 @@ namespace FactoryGame.Items
             spriteBatch.Draw(_texture, dest, Color.White);
         }
 
+        /*public virtual void DrawIcon(SpriteBatch spriteBatch, Slot slot)
+        {
+            Rectangle dest = new((int)slot.Get)
+        }*/
+
         public override string ToString()
         {
             return string.Format("Name: {0}, Texture: {1}", Name, _texture.ToString());
+        }
+
+        public virtual void Interact()
+        {
+            Debug.WriteLine(Name + " clicked!");
         }
     }
 }

@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Net.Http.Headers;
+﻿using Microsoft.Xna.Framework.Graphics;
+using System;
+using None = FactoryGame.Items.Air;
 
 namespace FactoryGame.Items
 {
@@ -8,7 +9,7 @@ namespace FactoryGame.Items
         public Slot[] Slots { get; private set; }
 
         public int CurrentSlot;
-        public bool Empty { get; private set; }
+        public bool Full { get; private set; }
         Player _player;
 
         public Inventory(int slots, Player player)
@@ -17,10 +18,30 @@ namespace FactoryGame.Items
             _player = player;
             for (int i = 0; i < Slots.Length; i++)
             {
-                Slots[i] = new(new Air(_player), i);
+                Slots[i] = new(new None(_player), i);
             }
-            Empty = false;
+            Full = false;
             CurrentSlot = 0;
+        }
+
+        public void Update()
+        {
+            bool full = false;
+            foreach(var slot in Slots)
+            {
+                if(slot.GetItem() is None)
+                {
+                    full = false;
+                } else if(slot.GetItem() is not None)
+                {
+                    full = true;
+                }
+            }
+
+            if(full)
+            {
+                Full = true;
+            }
         }
 
         public void SetSlot(int index)
@@ -57,34 +78,37 @@ namespace FactoryGame.Items
             }
         }
 
-        public void AddItem(Item item, int? index)
+        public void SetItem(Item item, int index)
         {
-            if(index != null)
+            if (!(index > Slots.Length - 1) && !(index < 0))
             {
-                if(index > Slots.Length - 1)
-                {
-                    return;
-                }
-                if(index < 0)
-                {
-                    return;
-                }
-                if (Slots[(int)index].GetItem() == null)
-                {
-                    Slots[(int)index].SetItem(item);
-                }
-            } else
+                Slots[index].SetItem(item);
+            }
+        }
+
+        public void AddItem(Item item)
+        {
+            for (int i = 0; i < Slots.Length; i++)
             {
-                for (int i = 0; i < Slots.Length; i++)
+                if (Slots[i].GetItem() is None)
                 {
-                    if (Slots[i].GetItem() == null)
-                    {
-                        Slots[i].SetItem(item);
-                        break;
-                    }
+                    Slots[i].SetItem(item);
+                    break;
                 }
             }
         }
+
+        public Slot GetSlotAtIndex(int index)
+        {
+            if(!(index < 0) && !(index > Slots.Length - 1))
+            {
+                return Slots[index];
+            } else
+            {
+                throw new IndexOutOfRangeException("Inventory Index out of bounds");
+            }
+        }
+
     }
     class Slot
     {
@@ -105,6 +129,14 @@ namespace FactoryGame.Items
         public override string ToString()
         {
             return string.Format("Item Name: {0}, Slot No.: {1}", _item.Name, Index);
+        }
+
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            if(_item is not Air)
+            {
+                _item.Draw(spriteBatch, new());
+            }
         }
     }
 }

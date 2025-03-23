@@ -33,6 +33,17 @@ namespace FactoryGame
             _input = new();
             _input.KeyPressEvent += HandleKeyInput;
             _input.MouseScrollEvent += HandleScrollWheelInput;
+            _input.MouseButtonEvent += HandleMouseButtonInput;
+
+            Inventory.SetItem(new TestItem(this), 1);
+        }
+
+        private void HandleMouseButtonInput(object sender, MouseEventArgs e)
+        {
+            if(e.MouseButton == MouseButtons.Left)
+            {
+                Inventory.GetCurrentSlot().GetItem().Interact();
+            }
         }
 
         private void HandleScrollWheelInput(object sender, ScrollWheelEventArgs e)
@@ -108,6 +119,8 @@ namespace FactoryGame
                     Position.X -= _movement.X * speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 }
             }
+
+            
             Debug.WriteLine(Inventory.GetCurrentSlot().ToString());
 
         }

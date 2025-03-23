@@ -1,6 +1,4 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
-using FactoryGame.Util;
+﻿using FactoryGame.Util;
 
 namespace FactoryGame.Items
 {

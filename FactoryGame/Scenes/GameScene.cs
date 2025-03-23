@@ -62,6 +62,8 @@ namespace FactoryGame.Scenes
                     spriteBatch.Draw(rect.Texture, rect.DestRect, Color.White);
                 }
             }
+
+            _player.Inventory.GetCurrentSlot().Draw(spriteBatch);
         }
 
 
