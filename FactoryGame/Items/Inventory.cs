@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using FactoryGame.UI;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
 using System;
 using None = FactoryGame.Items.Air;
 
@@ -12,9 +14,14 @@ namespace FactoryGame.Items
         public bool Full { get; private set; }
         Player _player;
 
-        public Inventory(int slots, Player player)
+        UIManager _ui;
+
+        GraphicsDevice _graphicsDevice;
+
+        public Inventory(int slots, Player player, GraphicsDevice graphicsDevice)
         {
             Slots = new Slot[slots];
+            _graphicsDevice = graphicsDevice;
             _player = player;
             for (int i = 0; i < Slots.Length; i++)
             {
@@ -22,6 +29,33 @@ namespace FactoryGame.Items
             }
             Full = false;
             CurrentSlot = 0;
+            _ui = new();
+            _ui.Add(new UIRectangle(Game1.ScreenWidth / 2 - 412, Game1.ScreenHeight - 100, 825, 100, Color.DarkGray, _graphicsDevice));
+            
+        }
+
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            _ui.Draw(spriteBatch);
+            for (int i = 0; i < 9; i++)
+            {
+                if (GetCurrentSlot().Index == i)
+                {
+                    UIRectangle rect = new UIRectangle(Game1.ScreenWidth / 2 - 405 + 7 + ((15 + 75) * i), Game1.ScreenHeight - 85, 75, 75, Color.Red, _graphicsDevice);
+                    spriteBatch.Draw(rect.Texture, rect.DestRect, Color.White);
+                }
+                else
+                {
+                    UIRectangle rect = new UIRectangle(Game1.ScreenWidth / 2 - 405 + 7 + ((15 + 75) * i), Game1.ScreenHeight - 85, 75, 75, Color.Black, _graphicsDevice);
+                    spriteBatch.Draw(rect.Texture, rect.DestRect, Color.White);
+                }
+
+                if (Slots[i].GetItem() is not None)
+                {
+                    Rectangle rect = new(Game1.ScreenWidth / 2 - 405 + 7 + ((15 + 75) * i), Game1.ScreenHeight - 85, 75, 75);
+                    spriteBatch.Draw(Slots[i].GetItem().GetTexture(), rect, Color.White);
+                } 
+            }
         }
 
         public void Update()
@@ -135,7 +169,7 @@ namespace FactoryGame.Items
         {
             if(_item is not Air)
             {
-                _item.Draw(spriteBatch, new());
+                _item.Draw(spriteBatch);
             }
         }
     }

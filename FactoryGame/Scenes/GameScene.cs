@@ -18,14 +18,11 @@ namespace FactoryGame.Scenes
         SceneManager _sceneManager;
         GraphicsDevice _graphicsDevice;
 
-        UIManager _inventoryUI;
-
         public GameScene(Player player, Camera camera, GraphicsDevice graphicsDevice)
         {
             _player = player;
             _camera = camera;
             _graphicsDevice = graphicsDevice;
-            _inventoryUI = new();
         }
 
 
@@ -36,7 +33,6 @@ namespace FactoryGame.Scenes
             _sprites.Add(new Sprite(content.Load<Texture2D>("enemy"), new Vector2(300, 300), Game1.Scale));
             _sprites.Add(new Sprite(content.Load<Texture2D>("enemy"), new Vector2(100, 100), Game1.Scale));
 
-            _inventoryUI.Add(new UIRectangle(Game1.ScreenWidth / 2 - 412, Game1.ScreenHeight - 100, 825, 100, Color.DarkGray, _graphicsDevice));
             
         }
 
@@ -48,20 +44,7 @@ namespace FactoryGame.Scenes
             }
             _player.Draw(spriteBatch, _camera.Position);
 
-            _inventoryUI.Draw(spriteBatch);
-            for (int i = 0; i < 9; i++)
-            {
-                if (_player.Inventory.GetCurrentSlot().Index == i)
-                {
-                    UIRectangle rect = new UIRectangle(Game1.ScreenWidth / 2 - 405 + 7 + ((15 + 75) * i), Game1.ScreenHeight - 85, 75, 75, Color.Red, _graphicsDevice);
-                    spriteBatch.Draw(rect.Texture, rect.DestRect, Color.White);
-                }
-                else
-                {
-                    UIRectangle rect = new UIRectangle(Game1.ScreenWidth / 2 - 405 + 7 + ((15 + 75) * i), Game1.ScreenHeight - 85, 75, 75, Color.Black, _graphicsDevice);
-                    spriteBatch.Draw(rect.Texture, rect.DestRect, Color.White);
-                }
-            }
+            _player.Inventory.Draw(spriteBatch);
 
             _player.Inventory.GetCurrentSlot().Draw(spriteBatch);
         }
@@ -76,7 +59,7 @@ namespace FactoryGame.Scenes
             _player.Update(gameTime, _sprites);
             _camera.Update();
             _camera.Follow(_player.Rect, _player.Origin, new(Game1.ScreenWidth, Game1.ScreenHeight));
-            _inventoryUI.Update();
+            _player.Inventory.Update();
         }
     }
 }

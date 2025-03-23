@@ -16,7 +16,7 @@ namespace FactoryGame
         public Vector2 Origin;
         public Vector2 ItemOrigin;
 
-        private SpriteEffects _rotation;
+        public SpriteEffects Rotation;
 
         public Inventory Inventory;
 
@@ -27,15 +27,15 @@ namespace FactoryGame
             _movement = Vector2.Zero;
             
             Origin = new(Rect.Width / 2, Rect.Height / 2);
-            ItemOrigin = new(Rect.Width - Game1.Instance.Camera.Position.X, Rect.Height / 2 - Game1.Instance.Camera.Position.Y);
-            Inventory = new(9, this);
+            ItemOrigin = new((int)Game1.ScreenWidth / 2 - 60 - Rect.Width / 2, (int)Game1.ScreenHeight / 2 - Rect.Height / 2 - 10);
+            Inventory = new(9, this, Game1.Instance.GraphicsDevice);
 
             _input = new();
             _input.KeyPressEvent += HandleKeyInput;
             _input.MouseScrollEvent += HandleScrollWheelInput;
             _input.MouseButtonEvent += HandleMouseButtonInput;
 
-            Inventory.SetItem(new TestItem(this), 1);
+            Inventory.SetItem(new TestItem(this), 0);
         }
 
         private void HandleMouseButtonInput(object sender, MouseEventArgs e)
@@ -99,12 +99,15 @@ namespace FactoryGame
             if (Keyboard.GetState().IsKeyDown(Keys.A))
             {
                 _movement.X -= 1;
-                _rotation = SpriteEffects.None;
+                Rotation = SpriteEffects.None;
+                ItemOrigin = new((int)Game1.ScreenWidth / 2 - 60 - Rect.Width / 2, (int)Game1.ScreenHeight / 2 - Rect.Height / 2 - 10);
+
             }
             if (Keyboard.GetState().IsKeyDown(Keys.D))
             {
                 _movement.X += 1;
-                _rotation = SpriteEffects.FlipHorizontally;
+                Rotation = SpriteEffects.FlipHorizontally;
+                ItemOrigin = new((int)Game1.ScreenWidth / 2 + 30 - Rect.Width / 2, (int)Game1.ScreenHeight / 2 - Rect.Height / 2 - 10);
             }
             if (_movement != Vector2.Zero)
             {
@@ -139,7 +142,7 @@ namespace FactoryGame
                 Rect.Height
             );
             
-            spriteBatch.Draw(_texture, dest, null, Color.White, 0f, new(), _rotation, 0f);
+            spriteBatch.Draw(_texture, dest, null, Color.White, 0f, new(), Rotation, 0f);
             //_inventory.GetCurrentSlot().Draw(spriteBatch, offset);
             //base.Draw(spriteBatch, camera);
         }

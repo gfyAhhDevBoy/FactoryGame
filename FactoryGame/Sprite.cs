@@ -28,6 +28,11 @@ namespace FactoryGame
             
         }
 
+        public Texture2D GetTexture()
+        {
+            return _texture;
+        }
+
         public virtual void Draw(SpriteBatch spriteBatch, Vector2 offset)
         {
             Rectangle dest = new(

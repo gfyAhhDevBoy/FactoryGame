@@ -24,10 +24,16 @@ namespace FactoryGame.Items
             spriteBatch.Draw(_texture, dest, Color.White);
         }
 
-        /*public virtual void DrawIcon(SpriteBatch spriteBatch, Slot slot)
+        public void Draw(SpriteBatch spriteBatch)
         {
-            Rectangle dest = new((int)slot.Get)
-        }*/
+            Rectangle dest = new((int)_player.ItemOrigin.X, (int)_player.ItemOrigin.Y, Rect.Width, Rect.Height);
+            SpriteEffects rot = SpriteEffects.None;
+            if(_player.Rotation == SpriteEffects.None) 
+                rot = SpriteEffects.FlipHorizontally;
+            if (_player.Rotation == SpriteEffects.FlipHorizontally)
+                rot = SpriteEffects.None;
+            spriteBatch.Draw(_texture, dest, null, Color.White, 0f, new(), rot, 0f);
+        }
 
         public override string ToString()
         {
