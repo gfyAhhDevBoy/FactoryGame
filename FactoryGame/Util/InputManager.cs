@@ -89,11 +89,11 @@ namespace FactoryGame.Util
             MouseState mouse = Mouse.GetState();
             if(mouse.ScrollWheelValue > _prevScrollWheelValue)
             {
-                MouseScrollEvent?.Invoke(this, new ScrollWheelEventArgs(ScrollWheelDirection.Down));
+                MouseScrollEvent?.Invoke(this, new ScrollWheelEventArgs(ScrollWheelDirection.Up));
             } 
             if(mouse.ScrollWheelValue < _prevScrollWheelValue)
             {
-                MouseScrollEvent?.Invoke(this, new ScrollWheelEventArgs(ScrollWheelDirection.Up));
+                MouseScrollEvent?.Invoke(this, new ScrollWheelEventArgs(ScrollWheelDirection.Down));
             }
 
             _prevScrollWheelValue = mouse.ScrollWheelValue;
