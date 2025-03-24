@@ -35,7 +35,6 @@ namespace FactoryGame
             _input.MouseScrollEvent += HandleScrollWheelInput;
             _input.MouseButtonEvent += HandleMouseButtonInput;
 
-            Inventory.SetItem(new TestItem(this), 0);
         }
 
         private void HandleMouseButtonInput(object sender, MouseEventArgs e)

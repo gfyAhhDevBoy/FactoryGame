@@ -102,14 +102,16 @@ namespace FactoryGame.Items
         {
             if (CurrentSlot < Slots.Length - 1)
                 CurrentSlot++;
+            else
+                CurrentSlot = 0;
         }
 
         public void PreviousSlot()
         {
-            if(CurrentSlot > 0)
-            {
+            if (CurrentSlot > 0)
                 CurrentSlot--;
-            }
+            else
+                CurrentSlot = Slots.Length - 1;
         }
 
         public void SetItem(Item item, int index)
