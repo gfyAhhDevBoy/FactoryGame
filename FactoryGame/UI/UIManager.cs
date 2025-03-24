@@ -33,9 +33,7 @@ namespace FactoryGame.UI
             }
         }
 
-        public virtual void Add(IUIElement uiElement)
-        {
-            _elements.Add(uiElement);
-        }
+        public virtual void Add(IUIElement uiElement) => _elements.Add(uiElement);
+        
     }
 }

@@ -28,9 +28,6 @@ namespace FactoryGame.Scenes
             _sceneStack.Pop();
         }
 
-        public IScene GetCurrentScene()
-        {
-            return _sceneStack.Peek();
-        }
+        public IScene GetCurrentScene() => _sceneStack.Peek();
     }
 }

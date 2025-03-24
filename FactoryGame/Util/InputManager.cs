@@ -102,17 +102,17 @@ namespace FactoryGame.Util
 
     public class KeboardEventArgs
     {
-        public KeboardEventArgs(Keys key) { Key = key; }
+        public KeboardEventArgs(Keys key) => Key = key; 
         public Keys Key { get; }
     }
     public class MouseEventArgs
     {
-        public MouseEventArgs(MouseButtons mouseButton) { MouseButton = mouseButton; }
+        public MouseEventArgs(MouseButtons mouseButton) => MouseButton = mouseButton;
         public MouseButtons MouseButton { get; }
     }
     public class ScrollWheelEventArgs
     {
-        public ScrollWheelEventArgs(ScrollWheelDirection dir) {  Dir = dir; }
+        public ScrollWheelEventArgs(ScrollWheelDirection dir) => Dir = dir;
         public ScrollWheelDirection Dir { get; }
     }
 }

@@ -93,10 +93,7 @@ namespace FactoryGame.Items
 
         }
 
-        public Slot GetCurrentSlot()
-        {
-            return Slots[CurrentSlot];
-        }
+        public Slot GetCurrentSlot() => Slots[CurrentSlot];
 
         public void NextSlot()
         {
@@ -158,14 +155,13 @@ namespace FactoryGame.Items
             Index = index;
         }
 
-        public Item GetItem() { return _item; }
-        public void SetItem(Item item) { _item = item; }
-        public void RemoveItem() { _item = null; }
+        public Item GetItem() => _item; 
+        public void SetItem(Item item) => _item = item;
+        public void RemoveItem(Player player) => _item = new None(player); 
 
         public override string ToString()
-        {
-            return string.Format("Item Name: {0}, Slot No.: {1}", _item.Name, Index);
-        }
+            => string.Format("Item Name: {0}, Slot No.: {1}", _item.Name, Index);
+        
 
         public void Draw(SpriteBatch spriteBatch)
         {

@@ -36,9 +36,9 @@ namespace FactoryGame.Items
         }
 
         public override string ToString()
-        {
-            return string.Format("Name: {0}, Texture: {1}", Name, _texture.ToString());
-        }
+        
+            => string.Format("Name: {0}, Texture: {1}", Name, _texture.ToString());
+        
 
         public virtual void Interact()
         {

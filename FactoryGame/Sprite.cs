@@ -10,10 +10,7 @@ namespace FactoryGame
         protected Vector2 _scale;
         
         public Rectangle Rect { 
-            get
-            {
-                return new Rectangle((int)Position.X - _texture.Width / 2, (int)Position.Y - _texture.Height / 2, _texture.Width * (int) _scale.X, _texture.Height*(int)_scale.Y);
-            }
+            get => new Rectangle((int)Position.X - _texture.Width / 2, (int)Position.Y - _texture.Height / 2, _texture.Width * (int) _scale.X, _texture.Height*(int)_scale.Y);
         }
 
         public Sprite(Texture2D texture, Vector2 position, Vector2 scale)
@@ -29,9 +26,7 @@ namespace FactoryGame
         }
 
         public Texture2D GetTexture()
-        {
-            return _texture;
-        }
+            => _texture;  
 
         public virtual void Draw(SpriteBatch spriteBatch, Vector2 offset)
         {
