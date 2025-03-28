@@ -50,7 +50,7 @@ namespace FactoryGame
             _graphics.ApplyChanges();
 
             base.Initialize();
-        }
+        } 
 
         protected override void LoadContent()
         {
