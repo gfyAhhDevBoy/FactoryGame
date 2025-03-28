@@ -1,16 +1,25 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace FactoryGame
+namespace SurvivalGame
 {
     class Sprite
     {
         protected Texture2D _texture;
         public Vector2 Position;
         protected Vector2 _scale;
-        
-        public Rectangle Rect { 
-            get => new Rectangle((int)Position.X - _texture.Width / 2, (int)Position.Y - _texture.Height / 2, _texture.Width * (int) _scale.X, _texture.Height*(int)_scale.Y);
+
+        public Rectangle Rect
+        {
+            get
+            {
+                return new Rectangle(
+                    (int)Position.X - _texture.Width / 2,
+                    (int)Position.Y - _texture.Height / 2,
+                    _texture.Width * (int)_scale.X,
+                    _texture.Height * (int)_scale.Y
+                );
+            }
         }
 
         public Sprite(Texture2D texture, Vector2 position, Vector2 scale)
@@ -20,13 +29,8 @@ namespace FactoryGame
             _scale = scale;
         }
 
-        public virtual void Update(GameTime gameTime)
-        {
-            
-        }
-
         public Texture2D GetTexture()
-            => _texture;  
+            => _texture;
 
         public virtual void Draw(SpriteBatch spriteBatch, Vector2 offset)
         {

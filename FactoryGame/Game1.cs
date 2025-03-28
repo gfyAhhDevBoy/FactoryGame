@@ -1,11 +1,11 @@
-﻿using FactoryGame.Scenes;
-using FactoryGame.Util;
+﻿using SurvivalGame.Scenes;
+using SurvivalGame.Util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Diagnostics;
 
-namespace FactoryGame
+namespace SurvivalGame
 {
     public class Game1 : Game
     {

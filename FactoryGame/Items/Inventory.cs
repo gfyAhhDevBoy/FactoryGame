@@ -1,10 +1,10 @@
-﻿using FactoryGame.UI;
+﻿using SurvivalGame.UI;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using System;
-using None = FactoryGame.Items.Air;
+using None = SurvivalGame.Items.Air;
 
-namespace FactoryGame.Items
+namespace SurvivalGame.Items
 {
     class Inventory
     {

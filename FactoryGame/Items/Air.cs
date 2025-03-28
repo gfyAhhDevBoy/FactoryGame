@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FactoryGame.Items
+namespace SurvivalGame.Items
 {
     class Air : Item
     {

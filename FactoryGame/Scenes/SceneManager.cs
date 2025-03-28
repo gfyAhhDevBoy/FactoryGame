@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FactoryGame.Scenes
+namespace SurvivalGame.Scenes
 {
     internal class SceneManager
     {

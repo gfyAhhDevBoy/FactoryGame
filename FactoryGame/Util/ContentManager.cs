@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace FactoryGame.Util
+namespace SurvivalGame.Util
 {
     static class ContentManager
     {

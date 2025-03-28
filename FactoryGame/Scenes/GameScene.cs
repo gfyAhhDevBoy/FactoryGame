@@ -3,10 +3,10 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using FactoryGame.UI;
+using SurvivalGame;
 using System.Diagnostics;
 
-namespace FactoryGame.Scenes
+namespace SurvivalGame.Scenes
 {
     internal class GameScene : IScene
     {
@@ -14,7 +14,7 @@ namespace FactoryGame.Scenes
         private Camera _camera;
 
         List<Sprite> _sprites;
-
+        
         SceneManager _sceneManager;
         GraphicsDevice _graphicsDevice;
 
@@ -32,7 +32,6 @@ namespace FactoryGame.Scenes
             _sprites.Add(new Sprite(content.Load<Texture2D>("enemy"), new Vector2(500, 300), Game1.Scale));
             _sprites.Add(new Sprite(content.Load<Texture2D>("enemy"), new Vector2(300, 300), Game1.Scale));
             _sprites.Add(new Sprite(content.Load<Texture2D>("enemy"), new Vector2(100, 100), Game1.Scale));
-
             
         }
 
@@ -56,7 +55,6 @@ namespace FactoryGame.Scenes
 
         public void Update(GameTime gameTime)
         {
-            _player.Update(gameTime, _sprites);
             _camera.Update();
             _camera.Follow(_player.Rect, _player.Origin, new(Game1.ScreenWidth, Game1.ScreenHeight));
             _player.Inventory.Update();

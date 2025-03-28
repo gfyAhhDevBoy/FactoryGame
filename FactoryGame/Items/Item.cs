@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 using System.Diagnostics;
 
-namespace FactoryGame.Items
+namespace SurvivalGame.Items
 {
     abstract class Item : Sprite
     {

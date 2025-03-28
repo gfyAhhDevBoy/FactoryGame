@@ -2,9 +2,8 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
-using static System.Net.Mime.MediaTypeNames;
 
-namespace FactoryGame.UI
+namespace SurvivalGame.UI
 {
     class TextButtonElement : IUIElement
     {

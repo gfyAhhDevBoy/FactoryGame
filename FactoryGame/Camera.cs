@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Input;
 using System.Diagnostics;
 
-namespace FactoryGame
+namespace SurvivalGame
 {
     public class Camera
     {

@@ -1,4 +1,4 @@
-﻿using FactoryGame.UI;
+﻿using SurvivalGame.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FactoryGame.Scenes
+namespace SurvivalGame.Scenes
 {
     class MainMenuScene : IScene
     {

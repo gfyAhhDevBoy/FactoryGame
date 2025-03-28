@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 
-namespace FactoryGame.UI
+namespace SurvivalGame.UI
 {
     interface IUIElement
     {

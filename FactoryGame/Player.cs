@@ -2,16 +2,20 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
-using FactoryGame.Items;
+using SurvivalGame.Items;
 using System.Diagnostics;
-using FactoryGame.Util;
+using SurvivalGame.Util;
 
-namespace FactoryGame
+namespace SurvivalGame
 {
     class Player : Sprite
     {
         Vector2 _movement;
-        private readonly float speed = 220f;
+        private float _moveSpeed;
+        private readonly float OriginalSpeed = 220f;
+        private float _sprintSpeed;
+        private bool _sprinting;
+        private float _stamina;
 
         public Vector2 Origin;
         public Vector2 ItemOrigin;
@@ -24,6 +28,11 @@ namespace FactoryGame
 
         public Player(Texture2D texture, Vector2 position, Vector2 scale) : base(texture, position, scale)
         {
+            _moveSpeed = OriginalSpeed;
+            _sprintSpeed = 420f;
+            _sprinting = false;
+            _stamina = 100f;
+
             _movement = Vector2.Zero;
             
             Origin = new(Rect.Width / 2, Rect.Height / 2);
@@ -86,12 +95,20 @@ namespace FactoryGame
             {
                 _movement.Normalize();
             }
-            Position.Y += _movement.Y * speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            Position.Y += _movement.Y * _moveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             foreach (var sprite in sprites)
             {
                 if (sprite.Rect.Intersects(Rect))
                 {
-                    Position.Y -= _movement.Y * speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    Position.Y -= _movement.Y * _moveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                }
+            }
+
+            foreach (var tree in trees)
+            {
+                if (tree.TrunkRect.Intersects(Rect))
+                {
+                    Position.Y -= _movement.Y * _moveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 }
             }
 
@@ -113,23 +130,42 @@ namespace FactoryGame
                 _movement.Normalize();
             }
 
-            Position.X += _movement.X * speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            Position.X += _movement.X * _moveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             foreach (var sprite in sprites)
             {
                 if (sprite.Rect.Intersects(Rect))
                 {
-                    Position.X -= _movement.X * speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    Position.X -= _movement.X * _moveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 }
             }
 
-            
+            foreach (var tree in trees)
+            {
+                if (tree.TrunkRect.Intersects(Rect))
+                {
+                    Position.X -= _movement.X * _moveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                }
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.LeftShift) && _stamina > 0)
+            {
+                _moveSpeed = _sprintSpeed;
+                _stamina -= 0.75f;
+            }
+            else
+            {
+                _moveSpeed = OriginalSpeed;
+            }
+
+            if (!Keyboard.GetState().IsKeyDown(Keys.LeftShift) && _stamina < 100)
+            {
+                _stamina += 0.3f;
+            }
+
+
             Debug.WriteLine(Inventory.GetCurrentSlot().ToString());
+            Debug.WriteLine($"Stamina: {_stamina}");
 
-        }
-
-        public override void Update(GameTime gameTime)
-        {
-            base.Update(gameTime); 
         }
 
         public override void Draw(SpriteBatch spriteBatch, Vector2 offset)

@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 
-namespace FactoryGame.Util
+namespace SurvivalGame.Util
 {
     public enum ScrollWheelDirection
     {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 
-namespace FactoryGame.UI
+namespace SurvivalGame.UI
 {
     class UIRectangle : IUIElement
     {
