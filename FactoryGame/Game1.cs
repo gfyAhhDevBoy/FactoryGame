@@ -17,7 +17,6 @@ namespace SurvivalGame
         public static readonly Vector2 Scale = new Vector2(10, 10);
 
         SceneManager _sceneManager;
-        InputManager _input;
 
         Player _player;
         public Camera Camera;
@@ -40,7 +39,6 @@ namespace SurvivalGame
         {
             // TODO: Add your initialization logic here
             _sceneManager = new();
-            _input = new();
             Camera = new(Vector2.Zero);
             _menuScene = new();
             _gameScene = new(_player, Camera, _graphics.GraphicsDevice);
@@ -60,9 +58,9 @@ namespace SurvivalGame
 
             _menuScene = new();
             _gameScene = new(_player, Camera, _graphics.GraphicsDevice);
-            //_sceneManager.LoadScene(new GameScene(_player, Camera, _graphics.GraphicsDevice), Content);
-            _sceneManager.LoadScene(_menuScene, Content);
-            _menuScene.playButton.ClickEvent += PlayButton_ClickEvent;
+            _sceneManager.LoadScene(new GameScene(_player, Camera, _graphics.GraphicsDevice), Content);
+            //_sceneManager.LoadScene(_menuScene, Content);
+            //_menuScene.playButton.ClickEvent += PlayButton_ClickEvent;
 
             // TODO: use this.Content to load your game content here
         }
@@ -78,7 +76,7 @@ namespace SurvivalGame
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            _input.Update();
+            InputManager.Update();
 
             _sceneManager.GetCurrentScene().Update(gameTime);
 

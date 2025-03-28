@@ -15,23 +15,23 @@ namespace SurvivalGame.Util
         Right
     }
 
-    public class InputManager
+    public static class InputManager
     {
         public delegate void KeyEventHandler(object sender, KeboardEventArgs e);
         public delegate void MouseEventHandler(object sender, MouseEventArgs e);
         public delegate void MouseScrollEventHandler(object sender, ScrollWheelEventArgs e);
-        public event KeyEventHandler KeyPressEvent;
-        public event KeyEventHandler KeyUpEvent;
-        public event MouseScrollEventHandler MouseScrollEvent;
-        public event MouseEventHandler MouseButtonEvent;
+        public static event KeyEventHandler KeyPressEvent;
+        public static event KeyEventHandler KeyUpEvent;
+        public static event MouseScrollEventHandler MouseScrollEvent;
+        public static event MouseEventHandler MouseButtonEvent;
 
-        private KeyboardState _prevKb;
-        private HashSet<Keys> _prevPressedKeys;
+        private static KeyboardState _prevKb;
+        private static HashSet<Keys> _prevPressedKeys;
 
-        private MouseState _prevMouse;
-        private int _prevScrollWheelValue;
+        private static MouseState _prevMouse;
+        private static int _prevScrollWheelValue;
 
-        public InputManager()
+        static InputManager()
         {
             _prevKb = Keyboard.GetState();
             _prevPressedKeys = new(_prevKb.GetPressedKeys());
@@ -39,30 +39,30 @@ namespace SurvivalGame.Util
             _prevMouse = Mouse.GetState();  
         }
 
-        public void Update()
+        public static void Update()
         {
             RaiseKeyPress();
             RaiseScrollWheelEvent();
             RaiseMouseButtonEvent();
         }
 
-        private void RaiseMouseButtonEvent()
+        private static void RaiseMouseButtonEvent()
         {
             MouseState mouse = Mouse.GetState(); 
 
             if(mouse.LeftButton == ButtonState.Pressed && !(_prevMouse.LeftButton == ButtonState.Pressed))
             {
-                MouseButtonEvent?.Invoke(this, new MouseEventArgs(MouseButtons.Left));
+                MouseButtonEvent?.Invoke(typeof(InputManager), new MouseEventArgs(MouseButtons.Left));
             }
             if (mouse.RightButton == ButtonState.Pressed && !(_prevMouse.RightButton == ButtonState.Pressed))
             {
-                MouseButtonEvent?.Invoke(this, new MouseEventArgs(MouseButtons.Right));
+                MouseButtonEvent?.Invoke(typeof(InputManager), new MouseEventArgs(MouseButtons.Right));
             }
 
             _prevMouse = mouse;
         }
 
-        private void RaiseKeyPress()
+        private static void RaiseKeyPress()
         {
             KeyboardState kb = Keyboard.GetState();
             Keys[] pressedKeys = kb.GetPressedKeys();
@@ -71,7 +71,7 @@ namespace SurvivalGame.Util
             {
                 if (!_prevPressedKeys.Contains(key))
                 {
-                    KeyPressEvent?.Invoke(this, new KeboardEventArgs(key));
+                    KeyPressEvent?.Invoke(typeof(InputManager), new KeboardEventArgs(key));
                 }
             }
 
@@ -84,16 +84,16 @@ namespace SurvivalGame.Util
             _prevKb = kb;
         }
 
-        private void RaiseScrollWheelEvent()
+        private static void RaiseScrollWheelEvent()
         {
             MouseState mouse = Mouse.GetState();
             if(mouse.ScrollWheelValue > _prevScrollWheelValue)
             {
-                MouseScrollEvent?.Invoke(this, new ScrollWheelEventArgs(ScrollWheelDirection.Up));
+                MouseScrollEvent?.Invoke(typeof(InputManager), new ScrollWheelEventArgs(ScrollWheelDirection.Up));
             } 
             if(mouse.ScrollWheelValue < _prevScrollWheelValue)
             {
-                MouseScrollEvent?.Invoke(this, new ScrollWheelEventArgs(ScrollWheelDirection.Down));
+                MouseScrollEvent?.Invoke(typeof(InputManager), new ScrollWheelEventArgs(ScrollWheelDirection.Down));
             }
 
             _prevScrollWheelValue = mouse.ScrollWheelValue;

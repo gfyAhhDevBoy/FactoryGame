@@ -12,7 +12,7 @@ namespace SurvivalGame.Items
 
         private Player _player;
 
-        public Item(Texture2D texture, Player player, string name, int scale) : base(texture, player.ItemOrigin, new(scale, scale))
+        public Item(Texture2D texture, Player player, string name, Vector2 scale) : base(texture, player.ItemOrigin, scale)
         {
             _player = player;
             Name = name;

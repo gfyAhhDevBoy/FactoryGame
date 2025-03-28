@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using SurvivalGame.Util;
 using System.Diagnostics;
 
 namespace SurvivalGame
@@ -9,16 +10,13 @@ namespace SurvivalGame
         public Vector2 Position;
         public int ZoomLevel;
 
-        Util.InputManager input;
-
         public Camera(Vector2 position)
         {
             Position = position;
             ZoomLevel = 5;
-            input = new();
 
-            input.MouseScrollEvent += HandleMouseWheel;
-            input.KeyPressEvent += HandleKeyInput;
+            InputManager.MouseScrollEvent += HandleMouseWheel;
+            InputManager.KeyPressEvent += HandleKeyInput;
         }
 
         private void HandleKeyInput(object sender, Util.KeboardEventArgs e)
@@ -51,7 +49,6 @@ namespace SurvivalGame
 
         public void Update()
         {
-            input.Update();
         }
 
         public void Follow(Rectangle target, Vector2 origin, Vector2 screenSize)

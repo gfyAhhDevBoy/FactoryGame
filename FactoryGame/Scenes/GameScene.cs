@@ -45,7 +45,6 @@ namespace SurvivalGame.Scenes
 
             _player.Inventory.Draw(spriteBatch);
 
-            _player.Inventory.GetCurrentSlot().Draw(spriteBatch);
         }
 
 
@@ -56,6 +55,7 @@ namespace SurvivalGame.Scenes
         public void Update(GameTime gameTime)
         {
             _camera.Update();
+            _player.Update(gameTime, _sprites);
             _camera.Follow(_player.Rect, _player.Origin, new(Game1.ScreenWidth, Game1.ScreenHeight));
             _player.Inventory.Update();
         }

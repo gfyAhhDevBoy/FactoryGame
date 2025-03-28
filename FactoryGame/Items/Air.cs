@@ -9,7 +9,7 @@ namespace SurvivalGame.Items
 {
     class Air : Item
     {
-        public Air(Player player) : base(null, player, "Air", 0)
+        public Air(Player player) : base(null, player, "Air", new())
         { 
         }
     }
