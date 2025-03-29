@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using SurvivalGame.Items;
 using System.Diagnostics;
 using SurvivalGame.Util;
-using System;
 
 namespace SurvivalGame
 {
@@ -25,6 +24,8 @@ namespace SurvivalGame
 
         public Inventory Inventory;
 
+        InputManager _input;
+
         public Player(Texture2D texture, Vector2 position, Vector2 scale) : base(texture, position, scale)
         {
             _moveSpeed = OriginalSpeed;
@@ -38,10 +39,11 @@ namespace SurvivalGame
             ItemOrigin = new((int)Game1.ScreenWidth / 2 - 60 - Rect.Width / 2, (int)Game1.ScreenHeight / 2 - Rect.Height / 2 - 10);
             Inventory = new(9, this, Game1.Instance.GraphicsDevice);
 
-            InputManager.KeyPressEvent += HandleKeyInput;
-            InputManager.MouseScrollEvent += HandleScrollWheelInput;
-            InputManager.MouseButtonEvent += HandleMouseButtonInput;
-            Inventory.AddItem(new TestItem(this));
+            _input = new();
+            _input.KeyPressEvent += HandleKeyInput;
+            _input.MouseScrollEvent += HandleScrollWheelInput;
+            _input.MouseButtonEvent += HandleMouseButtonInput;
+
         }
 
         private void HandleMouseButtonInput(object sender, MouseEventArgs e)
@@ -74,41 +76,16 @@ namespace SurvivalGame
             {
                 Inventory.PreviousSlot();
             }
-
-            switch (e.Key)
-            {
-                case Keys.Right:
-                    Inventory.NextSlot(); break;
-                case Keys.Left:
-                    Inventory.PreviousSlot(); break;
-
-                case Keys.E:
-                    Inventory.ToggleInventory(); break;
-
-                case Keys.D1:
-                case Keys.D2:
-                case Keys.D3:
-                case Keys.D4:
-                case Keys.D5:
-                case Keys.D6:
-                case Keys.D7:
-                case Keys.D8:
-                case Keys.D9:
-                    Debug.WriteLine(Int32.Parse(e.Key.ToString().Trim('D')) - 1);
-                    //break;
-                    Inventory.GoToSlot(Int32.Parse( e.Key.ToString().Trim('D')) - 1); break;
-                    
-            }
         }
 
         public void Update(GameTime gameTime, List<Sprite> sprites)
         {
+            _input.Update();
 
             _movement = Vector2.Zero;
             if (Keyboard.GetState().IsKeyDown(Keys.W))
             {
                 _movement.Y -= 1;
-                Debug.WriteLine("fwf");
             }
             if (Keyboard.GetState().IsKeyDown(Keys.S))
             {
@@ -122,6 +99,14 @@ namespace SurvivalGame
             foreach (var sprite in sprites)
             {
                 if (sprite.Rect.Intersects(Rect))
+                {
+                    Position.Y -= _movement.Y * _moveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                }
+            }
+
+            foreach (var tree in trees)
+            {
+                if (tree.TrunkRect.Intersects(Rect))
                 {
                     Position.Y -= _movement.Y * _moveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 }
@@ -154,6 +139,14 @@ namespace SurvivalGame
                 }
             }
 
+            foreach (var tree in trees)
+            {
+                if (tree.TrunkRect.Intersects(Rect))
+                {
+                    Position.X -= _movement.X * _moveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                }
+            }
+
             if (Keyboard.GetState().IsKeyDown(Keys.LeftShift) && _stamina > 0)
             {
                 _moveSpeed = _sprintSpeed;
@@ -170,8 +163,8 @@ namespace SurvivalGame
             }
 
 
-            //Debug.WriteLine(Inventory.GetCurrentSlot().ToString());
-            //Debug.WriteLine($"Stamina: {_stamina}");
+            Debug.WriteLine(Inventory.GetCurrentSlot().ToString());
+            Debug.WriteLine($"Stamina: {_stamina}");
 
         }
 
@@ -185,7 +178,7 @@ namespace SurvivalGame
             );
             
             spriteBatch.Draw(_texture, dest, null, Color.White, 0f, new(), Rotation, 0f);
-            Inventory.GetCurrentSlot().Draw(spriteBatch);
+            //_inventory.GetCurrentSlot().Draw(spriteBatch, offset);
             //base.Draw(spriteBatch, camera);
         }
     }
