@@ -1,5 +1,5 @@
 # (W.I.P.) Factorio-Like Game
-## !! Stopped work on this project to focus on other technologies !!
+## !! Stopped work on this project to focus on other projects !!
 Very bad Factorio clone made with C# Monogame. 
 
 ### Features
