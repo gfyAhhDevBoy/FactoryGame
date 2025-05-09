@@ -104,14 +104,6 @@ namespace SurvivalGame
                 }
             }
 
-            foreach (var tree in trees)
-            {
-                if (tree.TrunkRect.Intersects(Rect))
-                {
-                    Position.Y -= _movement.Y * _moveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                }
-            }
-
             if (Keyboard.GetState().IsKeyDown(Keys.A))
             {
                 _movement.X -= 1;
